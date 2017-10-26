@@ -6,13 +6,13 @@ body{
     display: grid;
     grid-template-rows: 3;
     grid-template-columns: 12;
-    background-color: #44CC44;
+    background-color: lightgreen;
 }
 #title{
-    color: white;
-    background-color: green;
+    color: black;
+    background-color: #44CC44;
     padding: 8px;
-    border-radius: 15px;
+    border-radius: 4px;
 
     grid-row: 1 / 2;
     grid-column: 2 / 7;
@@ -23,7 +23,7 @@ body{
     grid-column: 8 / 12;
 }
 .nav{
-    background-color: #008000;
+    background-color: #44CC44;
     color: white;
     position: relative;
     padding: 8px;
@@ -31,6 +31,35 @@ body{
     text-decoration: none;
 }
 .nav:hover{
-    background-color: lightgreen;
+    background-color: #44CC44;
     color: green;
+}
+
+
+#post-container{
+  border:2px solid lightgreen;
+  margin: 10px;
+  width: 30%;
+}
+
+#post-content{
+  border:2px solid green;
+  padding: 4px;
+  margin: 0px;
+}
+
+#post-buttons button{
+  font-family:helvetica;
+  background-color: lightgreen;
+  border:1px solid green;
+  border-radius: 4px;
+  width:50px;
+  height:30px;
+}
+
+#post-comment textarea{
+  width:95%;
+  padding:1%;
+  margin:1%;
+  border:1%;
 }
