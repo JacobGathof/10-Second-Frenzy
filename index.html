@@ -36,33 +36,40 @@
 
     </div>
 
-    <div id="post-container">
-      <div id="post-content">
-        <img id="post-content-image" src="icons/like.png" />
-        <p id="post-content-name">Chris Nurble </p>
-        <hr id="post-content-name-divider">
-        <p id="post-content-source">Confucious say: Woman with soap on top shelf jump for joy</p>
-      </div>
-
-      <div id="post-action-bar">
-        <div id="post-buttons">
-          <button><img src="icons/like.png"><div class="tool">Like</div></button>
-          <button><img src="icons/dislike.png"><div class="tool">Dislike</div></button>
-          <button><img src="icons/share.png"><div class="tool">Share</div></button>
-          <button><img src="icons/flag.png"><div class="tool">Flag</div></button>
-          <button><img src="icons/copy.png"><div class="tool">Copy</div></button>
-
-          <button id="post-comment-button">
-            <img src="icons/copy.png"><div class="tool">Post</div></button>
+    <div id="feed-area">
+      <div id="post-container-template">
+        <div id="post-content">
+          <img id="post-content-image" src="icons/like.png" />
+          <p id="post-content-name">Chris Nurble </p>
+          <p id="post-counter">10</p>
+          <hr id="post-content-name-divider">
+          <p id="post-content-source">Confucious say: Woman with soap on top shelf jump for joy</p>
         </div>
 
-        <div id="post-comment">
-          <textarea placeholder="Enter comment here..."></textarea>
+        <div id="post-action-bar">
+          <div id="post-buttons">
+            <button><img src="icons/like.png"><div class="tool">Like</div></button>
+            <button><img src="icons/dislike.png"><div class="tool">Dislike</div></button>
+            <button><img src="icons/share.png"><div class="tool">Share</div></button>
+            <button><img src="icons/flag.png"><div class="tool">Flag</div></button>
+            <button><img src="icons/copy.png"><div class="tool">Copy</div></button>
+
+            <button id="post-comment-button">
+              <img src="icons/copy.png"><div class="tool">Post</div></button>
+          </div>
+
+          <div id="post-comment">
+            <textarea placeholder="Enter comment here..."></textarea>
+          </div>
         </div>
+          <!--
+              content div for posts
+          -->
       </div>
-        <!--
-            content div for posts
-        -->
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/feed.js"></script>
+
 </body>
 </html>

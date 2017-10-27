@@ -1,8 +1,12 @@
-#post-container{
+.post-container{
   display:inline-block;
   border:2px solid lightgreen;
   margin: 10px;
   width: 50%;
+}
+
+#post-container-template{
+  display:none;
 }
 
 #post-content{
@@ -99,6 +103,10 @@ button img{
   height:20px;
 }
 
-#post-comment-button{
-
+#post-counter{
+  display:inline-block;
+  float:right;
+  margin: 0%;
+  padding:0%;
+  font-size:28pt;
 }
