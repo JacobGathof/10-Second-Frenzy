@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="css/infrastructure.css">
-    <title>Welcome to10 Second Frenzy</title>
+    <link rel="stylesheet" type="text/css" href="css/chats.css">
+    <title>Welcome to 10 Second Frenzy</title>
 </head>
 <body>
     <!--
@@ -21,23 +22,49 @@
         <!-- 
             start navigation menu
         -->
-        <ul class="nav-list">
-            <li><a class="nav" href="homefeed.html">Feed</a></li>
-            <li><a class="nav" href="">Chats</a></li>
-            <li><a class="nav" href="friends.html">Freinds</a></li>
-            <li><a class="nav" href="">Leaderboards</a></li>
-            <li><a class="nav" href="">Global</a></li>
-            <li><a class="nav" href="">Settings</a></li>
-        </ul>
+        <div id="navlist">
+            <a class="nav" href="index.html">Feed</a>
+            <a class="nav" href="">Chats</a>
+            <a class="nav" href="friends.html">Friends</a>
+            <a class="nav" href="">Leaderboards</a>
+            <a class="nav" href="">Global</a>
+            <a class="nav" href="">Settings</a>
+        </div>
         <!--
 
         -->
 
-    </div>
-    <div>
+    </div> <!-- end "header" div-->
+    <div class-"content-container">
         <!--
             content div for e
         -->
+        <div class="friends-list">
+            <!--
+             friends-list has a Friends header and the list of friends below it
+            -->
+            <div class="friends-list-header">
+                <h2>Friends</h2>
+            </div>
+
+            <div class="friends-list-content">
+                <div class="chat-link">
+                    Chris
+                </div>
+                <div class="chat-link">
+                    Jake
+                </div>
+                <div class="chat-link">
+                    Michael
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-window">
+            <!-- 
+                content will be the name of friend and chat messages
+            -->
+        </div>
     </div>
 </body>
 </html>
