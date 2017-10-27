@@ -1,0 +1,23 @@
+#content{
+    display: grid;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto ;
+    grid-template-columns: auto auto auto auto auto;
+    align-items: stretch;
+}
+
+#friends-container{
+    border: 5px solid lightgreen;
+    text-align: center;
+    grid-column: 2 / 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#friends-of-friends-container{
+    border: 5px solid lightgreen;
+    text-align: center;
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
+    height: 60%;
+    overflow: scroll;
+}
