@@ -5,27 +5,71 @@
     --shade-3: #5B8B5B;
     --shade-4: #3D703D;
 }
+h1,h2,h3,h4,h5,h6{
+}
 .content-container{
     display: grid;
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto ;
+    grid-auto-rows: 7%;
     grid-template-columns: 4% 20% 4% 20% 4% 20% 4% 20% 4%;
-    align-items: stretch;
+
+    height: 700px;
 }
 .friends-list{
-    padding: 10px;
     grid-row: 2 / 12;
     grid-column: 2 / 3;
 
     background-color: var(--shade-1);
     border: 2px solid var(--shade-4);
 }
-
-.chat-window{
+.friends-list-header{
+    font-size: 200%;
     padding: 10px;
-    
-    grid-row: 2 / 12;
+    margin: 0;
+    border: 2px solid var(--shade-4);
+    border-width: 0 0 2px 0;
+    margin-bottom: 5px;
+}
+.friends-list-content{
+}
+
+.chat-link{
+    font-size: 90%;
+    padding: 2px;
+}
+.chat-link:hover{
+    background-color: var(--shade-3);
+    color: var(--shade-1);
+}
+
+.chat-window{    
+    grid-row: 2 / 6;
     grid-column: 4 / 5;
     
     background-color: var(--shade-1);
     border: 2px solid var(--shade-4);
+}
+.chat-window-header{
+    text-align: right;
+    border: inherit;
+    border-width: 0px 0px 2px 0px;
+    padding: 2px;
+}
+.chat-message-container{
+    padding: 2px 0px 2px 0px;
+}
+.incoming-chat-message{
+    padding: 2px;
+    text-align: left;
+    background-color: var(--shade-2);
+}
+.outgoing-chat-message{
+    padding: 2px;
+    text-align: right;
+    background-color: var(--shade-1);
+}
+textarea{
+    border: inherit;
+    border-width: 2px 0px 0px 0px;
+    text-align: left;
+    resize: none;
 }

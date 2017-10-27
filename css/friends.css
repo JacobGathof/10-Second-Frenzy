@@ -1,23 +1,99 @@
+body{
+    background-color: #44CC44;
+}
+
 #content{
     display: grid;
-    grid-template-rows: auto auto auto auto auto auto auto auto auto auto ;
-    grid-template-columns: auto auto auto auto auto;
-    align-items: stretch;
+    grid-auto-rows: 50px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    background-color: #44CC44;
+}
+
+#buttons{
+    display: grid;
+    grid-auto-rows: 50px;
+    grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
+    background-color: #44CC44;
+}
+
+#friends-title{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    text-align: center;
+    color: black;
+    border: 2px solid lightgreen;
+    height: 50px;
+    border-bottom: none;
+    background-color: green;
 }
 
 #friends-container{
-    border: 5px solid lightgreen;
+    border: 2px solid lightgreen;
+    border-top: none;
     text-align: center;
     grid-column: 2 / 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
+    grid-row: 2 / 12;
+    overflow: scroll;
+    background-color: green;
+}
+
+#friends-of-friends-title{
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+    text-align: center;
+    border: 2px solid lightgreen;
+    height: 50px;
+    border-bottom: none;
+    background-color: green;
 }
 
 #friends-of-friends-container{
-    border: 5px solid lightgreen;
+    border: 2px solid lightgreen;
+    border-top: none;
     text-align: center;
-    grid-row: 1 / 2;
     grid-column: 4 / 5;
-    height: 60%;
+    grid-row: 2 / 12;
     overflow: scroll;
+    background-color: green;
 }
+
+#add-friend-button{
+    border: 2px solid lightgreen;
+    text-align: center;
+    vertical-align: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    line-height: 275%;
+    background-color: green;
+}
+
+#add-friend{
+    border: 2px solid lightgreen;
+    text-align: center;
+    vertical-align: center;
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    line-height: 275%;
+    background-color: green;
+}
+
+#generate-friend-code-button{
+    border: 2px solid lightgreen;
+    text-align: center;
+    vertical-align: center;
+    grid-column: 5 / 6;
+    grid-row: 2 / 3;
+    line-height: 275%;
+    background-color: green;
+}
+
+#generate-friend-code{
+    border: 2px solid lightgreen;
+    text-align: center;
+    vertical-align: center;
+    grid-column: 6 / 7;
+    grid-row: 2 / 3;
+    line-height: 275%;    
+    background-color: green;
+}
+
