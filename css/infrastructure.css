@@ -1,3 +1,11 @@
+:root{
+    --shade-1: #81B181;
+    --shade-2: #579057;
+    --shade-3: #3C743C;
+    --shade-4: #235E23;
+    --shade-5: #104710;
+}
+
 body{
     margin: 0;
     padding: 0;

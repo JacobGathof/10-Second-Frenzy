@@ -1,0 +1,31 @@
+:root{
+    --shade-0: #7EA57E;	/* Main Primary color */
+    --shade-1: #D3DFD3;
+    --shade-2: #A8C3A8;
+    --shade-3: #5B8B5B;
+    --shade-4: #3D703D;
+}
+.content-container{
+    display: grid;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto ;
+    grid-template-columns: 4% 20% 4% 20% 4% 20% 4% 20% 4%;
+    align-items: stretch;
+}
+.friends-list{
+    padding: 10px;
+    grid-row: 2 / 12;
+    grid-column: 2 / 3;
+
+    background-color: var(--shade-1);
+    border: 2px solid var(--shade-4);
+}
+
+.chat-window{
+    padding: 10px;
+    
+    grid-row: 2 / 12;
+    grid-column: 4 / 5;
+    
+    background-color: var(--shade-1);
+    border: 2px solid var(--shade-4);
+}
