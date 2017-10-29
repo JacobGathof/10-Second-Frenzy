@@ -1,19 +1,16 @@
 body{
-    background-color: #44CC44;
 }
 
 #content{
     display: grid;
     grid-auto-rows: 50px;
     grid-template-columns: 20% 20% 20% 20% 20%;
-    background-color: #44CC44;
 }
 
 #buttons{
     display: grid;
     grid-auto-rows: 50px;
     grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;
-    background-color: #44CC44;
 }
 
 #friends-title{
@@ -24,7 +21,7 @@ body{
     border: 2px solid lightgreen;
     height: 50px;
     border-bottom: none;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #friends-container{
@@ -34,7 +31,7 @@ body{
     grid-column: 2 / 3;
     grid-row: 2 / 12;
     overflow: scroll;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #friends-of-friends-title{
@@ -44,7 +41,7 @@ body{
     border: 2px solid lightgreen;
     height: 50px;
     border-bottom: none;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #friends-of-friends-container{
@@ -54,7 +51,7 @@ body{
     grid-column: 4 / 5;
     grid-row: 2 / 12;
     overflow: scroll;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #add-friend-button{
@@ -64,7 +61,7 @@ body{
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     line-height: 275%;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #add-friend{
@@ -74,7 +71,7 @@ body{
     grid-column: 3 / 4;
     grid-row: 2 / 3;
     line-height: 275%;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #generate-friend-code-button{
@@ -84,7 +81,7 @@ body{
     grid-column: 5 / 6;
     grid-row: 2 / 3;
     line-height: 275%;
-    background-color: green;
+    background-color: #D3DFD3;
 }
 
 #generate-friend-code{
@@ -94,6 +91,13 @@ body{
     grid-column: 6 / 7;
     grid-row: 2 / 3;
     line-height: 275%;    
+    background-color: #D3DFD3;
+}
+
+#add-friend-button:hover{
     background-color: green;
 }
 
+#generate-friend-code-button:hover{
+    background-color: green;
+}
