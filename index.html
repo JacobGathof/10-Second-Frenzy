@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="css/feed.css">
     <title>Welcome to 10 Second Frenzy</title>
 </head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/feed.js"></script>
+
+
 <body>
     <!--
 
@@ -66,10 +72,18 @@
               content div for posts
           -->
       </div>
+	  
+	  
+	  
+		<ul id="messages"></ul>
+			<form action="">
+			<input id="m" autocomplete="off" /><button>Send</button>
+		</form>
+	  
+	  
+	  
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="js/feed.js"></script>
+	
 
 </body>
 </html>
