@@ -1,0 +1,8 @@
+#selectors td{
+    border: 2px solid lightgreen;
+}
+
+#selectors{
+    border-collapse: collapse;
+}
+
