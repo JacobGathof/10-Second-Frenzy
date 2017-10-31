@@ -1,8 +1,53 @@
-#selectors td{
+#content{
+    display: grid;
+    grid-auto-rows: 50px;
+    grid-template-columns: 14.29% 14.29% 14.29% 14.29% 14.29% 14.29% 14.29%;
+}
+
+button{
     border: 2px solid lightgreen;
+    width: 100%;
+    background-color: #D3DFD3;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #selectors{
     border-collapse: collapse;
+    text-align: center;
+    grid-column: 2 / 7;
+    width: 75%;
+    grid-row: 2 / 3;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+#selectors tr td:first-child button{
+    background-color: lightgreen;
+}
+
+#posts{
+    border-collapse: collapse;
+    grid-column: 2 / 7;
+    width: 100%;
+    grid-row: 4 / 20;
+    background-color: #E3F4E3
+}
+
+#posts tr td:first-child{
+    text-align: right;
+    width: 10px;
+}
+
+#posts tr td:nth-child(2){
+    width: 50px;
+}
+
+#posts td{
+    border: 2px solid lightgreen;
+    padding: 10px;
+}
+#posts th{
+    border: 2px solid lightgreen;
+    padding: 10px;
+}
