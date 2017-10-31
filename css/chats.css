@@ -49,6 +49,7 @@ h1,h2,h3,h4,h5,h6{
     border: 2px solid var(--shade-4);
 
     position: relative;
+    overflow: hidden;
 }
 .chat-window-header{
     text-align: right;
@@ -58,6 +59,7 @@ h1,h2,h3,h4,h5,h6{
 }
 .chat-message-container{
     padding: 2px 0px 2px 0px;
+    overflow-y: scroll;
 }
 .incoming-chat-message{
     padding: 2px;

@@ -1,14 +1,16 @@
 (function () {
     let rowStart = 2;
-    let rowLength = 4;
-    let rowOffset = 1;
+    const rowLength = 4;
+    const rowOffset = 1;
 
-    let columnOrigin = 4;
+    const columnOrigin = 4;
     let columnStart = 4;
-    let columnLength = 1;
-    let columnOffset = 1;
+    const columnLength = 1;
+    const columnOffset = 1;
 
-    let columnLimit = 8;
+    const columnLimit = 8;
+    
+    const socket = io();
     console.log("HELLO");
 
     function createChatBox(name) {
@@ -37,14 +39,26 @@
             rowStart += rowLength + rowOffset;
         }
         /* Add socket connection to the submit buttons*/
-        $.each($(".submit-button"), (index, val) =>{
-            $(val).on('click', function (){
-                socket.emit('chat message', $(".chat-message-entry").text());
-                //set text value to blank
+
+        submitButton.on('click', function () {
+            if ($(textarea).val()==""){
                 return false;
-            });
+            }
+            socket.emit('chat message', $(".chat-message-entry").val());
+            addOutgoingMessage(`#${name}`, $(textarea).val());
+            //set text value to blank
+            console.log($(textarea));
+            $(textarea).val("");
+            return false;
         });
-        
+
+        socket.on('chat message', function(msg){
+            addIncomingMessage(`#${name}`, msg);
+        });
+
+        socket.on('destroy', function(){
+            $(messageWindow).children().first().remove();
+        });
 
         /* Append the window to the clobal content container. */
         $(".content-container").append(chatWindow);
@@ -64,6 +78,6 @@
 
     function addOutgoingMessage(id, msg){
         chatWindow = $(id);
-        chatWindow.append($("<div>").addClass("incoming-chat-message").text(msg));
+        chatWindow.append($("<div>").addClass("outgoing-chat-message").text(msg));
     }
 })();
