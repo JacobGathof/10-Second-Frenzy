@@ -22,10 +22,33 @@ io.on('connection', function(socket){
 
 io.on('connection', function(socket){
     socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
+        new ChatMessage(0,0,msg);
     });
 });
 
 http.listen(port, function(){
     console.log('listening on *:3000');
 });
+
+
+class ChatMessage{
+
+    constructor(to, from, msg){
+        this.to = to;
+        this.from = from;
+        this.msg = msg;
+        this.id = 
+        this.sendMessage(msg);
+        setTimeout(()=>{
+            this.selfDestruct(this.msg);
+        }, 5000);
+    }
+
+    sendMessage(msg){
+        io.emit('chat message', msg);
+    }
+
+    selfDestruct(msg){
+        io.emit('destroy', msg);
+    }
+}
