@@ -29,31 +29,34 @@
     <div id="content">
         <div id="new-user">
             <h2>New Users:</h2>
-            <form id="new-user-form">
                 Username:
-                <input name="username" type="text">
+                <input name="username" type="text" id="new-username">
                 <br><br>
                 Password:
-                <input name="password" type="text">
+                <input name="password" type="text" id="new-password">
                 <br><br>
-                <input type="submit">
-            </form>
+                Repeat Password:
+                <input name="password" type="text" id="new-repeated-password">
+                <br><br>
+                Display Name:
+                <input name="password" type="text" id="new-display-name">
+                <br><br>
+                <input type="submit" id="new-user-submit">
         </div>
         <div id = "existing-user">
               <h2>Existing Users:</h2>
-              <form id="existing-user-form">
                   Username:
-                  <input name="username" type="text">
+                  <input name="username" type="text" id="existing-username">
                   <br><br>
                   Password:
-                  <input name="password" type="text">
+                  <input name="password" type="text" id="existing-password">
                   <br><br>
-                  <input type="submit">
-                </form>
+                  <input type="submit" id="existing-user-submit">
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- <script src="js/login.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>
