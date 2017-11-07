@@ -41,6 +41,10 @@ io.on('connection', function(socket){
         removeUser(socket);
     });
 
+    socket.on("post to global feed", function(name, msg){
+        new GlobalPost(name, msg);
+    });
+
     socket.on('register', function(name, username, password){
         console.log("User Registered");
         USER.create({
@@ -179,4 +183,25 @@ function updateUser(name, socketid){
             usr.save();
         }
     });
+}
+
+class GlobalPost{
+
+    constructor(name, msg){
+        this.name = name;
+        this.msg = msg;
+        
+        this.sendMessage(name, msg);
+        setTimeout(()=>{
+            this.selfDestruct(this.name, this.msg);
+        }, 5000);
+    }
+
+    sendMessage(name, msg){
+        io.emit('global post', name, msg);
+    }
+
+    selfDestruct(name, msg){
+        io.emit("destroy global post", msg);
+    }
 }
