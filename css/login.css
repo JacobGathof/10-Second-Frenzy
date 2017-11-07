@@ -1,0 +1,15 @@
+#content{
+    display: grid;
+    grid-auto-rows: 50px;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+#new-user{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+#existing-user{
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+}
