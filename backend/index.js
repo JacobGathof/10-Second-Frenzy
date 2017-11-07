@@ -23,11 +23,13 @@ mongoose.connect(dbURI, {
     }
 });
 
-app.use('/', express.static(path.join(__dirname, "/../")));
 
 app.get("/", (req, res)=>{
-    res.sendFile("index.html");
+    console.log("Here");
+    res.sendFile("login.html", { root: __dirname + "/../"});
 });
+
+app.use('/', express.static(path.join(__dirname, "/../")));
 
 io.on('connection', function(socket){
 

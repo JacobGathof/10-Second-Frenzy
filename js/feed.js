@@ -3,27 +3,31 @@
 (function () {
     "use strict";
 	
+	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
 	
-    function setup() {
-		var socket = io();
-		$('#b').on("click", function(){
-			//socket.emit('chat message', $('#m').val());
-			//$('#m').val('');
-			const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
-			const msg = $("#m").val();
-			console.log(name + " " + msg);
-			createPost(name, msg);
-			return false;
-		});
+	var socket = io();
+	$('#b').on("click", function(){
+		//socket.emit('chat message', $('#m').val());
+		//$('#m').val('');
+		const msg = $("#m").val();
+		console.log(name + " " + msg);
+		createPost(name, msg);
+		return false;
+	});
 
-		socket.on('chat message', function(msg){
-			$('#messages').append($('<li>').text(msg));
-		});
+	socket.emit("booyakasha", name);
+	
+	socket.on('chat message', function(msg){
+		$('#messages').append($('<li>').text(msg));
+	});
+	
+	socket.on('destroy', function(msg){
+		$('#messages').children().first().remove();
+	});
+	
+	function setup(){
 		
-		socket.on('destroy', function(msg){
-			$('#messages').children().first().remove();
-		});
-    }
+	}
 
     $(window).on('load', setup);
 

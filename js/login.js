@@ -2,7 +2,8 @@
     const socket = io();
     $("#new-user-submit").on("click", newUserSubmit);
     $('#existing-user-submit').on("click", existingUserSubmit);
-
+	
+	
     function newUserSubmit(){
         const username = $("#new-username").val();
         const password = $("#new-password").val();
@@ -24,6 +25,7 @@
     socket.on('sendUserBack', function(user){
         try{
             sessionStorage.setItem("user", JSON.stringify(user));
+			window.location.href = "index.html";
         }
         catch(e){
             console.log(e);
