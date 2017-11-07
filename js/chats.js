@@ -10,7 +10,6 @@
 
     const columnLimit = 8;
     
-    const socket = io();
     console.log("HELLO");
 
     function createChatBox(name) {
@@ -18,6 +17,8 @@
         if ($(`#${name}`).length!=0){
             return;
         }
+        
+        const socket = io();
         /* Create the actual chat window */
         const chatWindow = $("<div>").addClass("chat-window");
         const header = $("<div>").addClass("chat-window-header").text(name);

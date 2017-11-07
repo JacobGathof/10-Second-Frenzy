@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
     dislikes: Number,
     shares: Number,
     reports: Number,
-    comments: [Comment]
+    comments: [String]
 });
 
 module.exports = mongoose.model('Post', postSchema);
