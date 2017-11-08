@@ -14,8 +14,9 @@
 	  node1.find("#post-content-name").html(name);
 	  node1.find("#post-content-source").html(message);
 	  node1.find("#post-content-id").html(id);
-	  node1.find('.blike').on("click", function(e){
-			const id = $(e.target).parent().parent().parent().parent().attr("data-post-id");
+	  node1.find('.blike').on("click", function(){
+			console.log(node1.find(".post-container"));
+			const id = node1.find(".post-container").attr("data-post-id");
 			console.log(id);
 			socket.emit('like post', id)
 		});
@@ -58,7 +59,7 @@
 		for(let i = 0; i < children.length; i++){
 			let child = children[i];
 			if(child.getAttribute("data-post-id") == id){
-				$(child.children[0].children[2]).text(""+likes);
+				child.children[0].children[2].innerHTML = ""+likes;
 				return;
 			}
 		}
