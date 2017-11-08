@@ -97,6 +97,10 @@ io.on('connection', function(socket){
     socket.on('set my friend code', function(name, code){
         new FriendCode(name, code);
     });
+
+    socket.on("display friends", function(name){
+        socket.emit("sending friends list", users.filter((u)=>{return u.name==name;})[0].friends);
+    });
 });
 
 
@@ -174,20 +178,17 @@ class LocalPost{
     }
 
     sendMessage(name, msg){
-        USER.findOne({name:name}, (err, user)=>{
-            if(!err){
-                const fr = user.friends;
-                const friendObjects = users.filter((f)=>{
-                    return fr.indexOf(f.name) != -1;
-                });
+        const user = users.filter((u)=>{return u.name==name;})[0];
+        io.to(user.socket.id).emit('local post', name, msg);
+        this.to.push(user.socket.id);
+        const friends = user.friends;
 
-                io.to(users.filter((u)=>{return u.name==name;})[0].socket.id).emit('local post', name, msg);
-                this.to.push(users.filter((u)=>{return u.name==name;})[0].socket.id);
-                friendObjects.forEach((user)=>{
-                    this.to.push(user.socket.id);
-                    io.to(user.socket.id).emit('local post', name, msg);
-                });
-                
+        friends.forEach((fr)=>{
+            const ff = users.filter((f)=>{return fr==f.name;})[0];
+            if(ff){
+                const fs = ff.socket.id;
+                this.to.push(fs);
+                io.to(fs).emit('local post', name, msg);
             }
         });
 
