@@ -26,5 +26,21 @@
 	$(window).on("unload", function(){
 		socket.emit('sayonara', name);
 	});
+
+
+	$(document).ready( () => {
+		// get contacts from api
+		console.log("Sent request for friends.");
+        socket.emit('display friends', name);
+	});
+	
+	socket.on("sending friends list", function(friends){
+		console.log("Got friends.");
+		console.log(friends);
+		const friendsContainer = $('#friends-container');
+		friends.forEach((friend) => {
+			friendsContainer.append(`<p> ${friend} </p>`);
+		});
+	});
 	
 })();
