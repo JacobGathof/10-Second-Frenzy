@@ -21,12 +21,12 @@
 	var socket = io();
 	
 	
-	socket.on('local post', function(name, msg){
+	socket.on('global post', function(name, msg){
 		createPost(name, msg);
 	});
 	
 	
-	socket.on('destroy local post', function(msg){
+	socket.on('destroy global post', function(msg){
 		$('#feed-area').children().last().remove();
 	});
 	
@@ -34,7 +34,7 @@
 	
 	function setup(){
 		$('#b').on("click", function(){
-			socket.emit('post to local feed', name, $('#m').val());
+			socket.emit('post to global feed', name, $('#m').val());
 		});
 	}
 	

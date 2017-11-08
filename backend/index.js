@@ -12,6 +12,8 @@ const port = process.env.PORT || 3000;
 const users = [];
 let globalId = 0;
 
+const timer = 10000;
+
 const dbURI = 'mongodb://user:user@ds243085.mlab.com:43085/ten-second-frenzy';
 mongoose.connect(dbURI, {
     useMongoClient: true
@@ -42,6 +44,10 @@ io.on('connection', function(socket){
     });
 
     socket.on("post to global feed", function(name, msg){
+        new GlobalPost(name, msg);
+    });
+
+    socket.on("post to local feed", function(name, msg){
         new LocalPost(name, msg);
     });
 
@@ -149,7 +155,7 @@ class ChatMessage{
         this.sendMessage(msg, to, from);
         setTimeout(()=>{
             this.selfDestruct(this.msg, to, from);
-        }, 5000);
+        }, timer);
     }
 
     sendMessage(msg, to, from){
@@ -174,7 +180,7 @@ class LocalPost{
         this.sendMessage(name, msg);
         setTimeout(()=>{
             this.selfDestruct(this.name, this.msg);
-        }, 5000);
+        }, timer);
     }
 
     sendMessage(name, msg){
@@ -215,7 +221,7 @@ class FriendCode{
         this.user.code = code;
         setTimeout(()=>{
             this.selfDestruct();
-        }, 10000);
+        }, timer);
     }
 
     selfDestruct(){
@@ -241,7 +247,7 @@ class GlobalPost{
         this.sendMessage(name, msg);
         setTimeout(()=>{
             this.selfDestruct(this.name, this.msg);
-        }, 5000);
+        }, timer);
     }
 
     sendMessage(name, msg){
