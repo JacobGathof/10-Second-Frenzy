@@ -67,7 +67,7 @@
     $(document).ready(function () {
         //create chat links
         const friendlist = $('friends-list-content');
-        user.friends.array.forEach(function(name) {
+        user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
         //assign chat-links
