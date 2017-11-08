@@ -16,7 +16,8 @@
     }
 	
 	function addFriend(){
-		const code = $('#add-friend');
+		const code = $('#add-friend-code').val();
+		console.log(code);
 		socket.emit('add friend', name, code);
 	}
 	
