@@ -114,11 +114,14 @@ http.listen(port, function(){
 
 
 function addUser(name, socket){
-    users.push(new User(name, socket));
-    console.log("A user connected");
-    users.forEach((user)=>{
-        console.log(user.name);
+    const u = new User(name, socket);
+    USER.findOne({name:name}, (err, user)=>{
+        if(!err){
+            u.friends = user.friends;
+        }
     });
+    users.push(u);
+    console.log("A user connected");
 }
 
 function removeUser(socket){
@@ -187,7 +190,7 @@ class LocalPost{
                 
             }
         });
-        
+
     }
 
     selfDestruct(name, msg){
@@ -224,6 +227,7 @@ class User{
         this.name = username;
         this.socket = socket;
         this.code = -1;
+        this.friends = [];
     }
 }
 
