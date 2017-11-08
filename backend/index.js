@@ -42,7 +42,7 @@ io.on('connection', function(socket){
     });
 
     socket.on("post to global feed", function(name, msg){
-        new GlobalPost(name, msg);
+        new LocalPost(name, msg);
     });
 
     socket.on('register', function(name, username, password){
@@ -97,6 +97,10 @@ io.on('connection', function(socket){
     socket.on('set my friend code', function(name, code){
         new FriendCode(name, code);
     });
+
+    socket.on("display friends", function(name){
+        socket.emit("sending friends list", users.filter((u)=>{return u.name==name;})[0].friends);
+    });
 });
 
 
@@ -114,11 +118,14 @@ http.listen(port, function(){
 
 
 function addUser(name, socket){
-    users.push(new User(name, socket));
-    console.log("A user connected");
-    users.forEach((user)=>{
-        console.log(user.name);
+    const u = new User(name, socket);
+    USER.findOne({name:name}, (err, user)=>{
+        if(!err){
+            u.friends = user.friends;
+        }
     });
+    users.push(u);
+    console.log("A user connected");
 }
 
 function removeUser(socket){
@@ -162,6 +169,7 @@ class LocalPost{
     constructor(name, msg){
         this.name = name;
         this.msg = msg;
+        this.to = [];
         
         this.sendMessage(name, msg);
         setTimeout(()=>{
@@ -170,24 +178,26 @@ class LocalPost{
     }
 
     sendMessage(name, msg){
-        USER.findOne({name:name}, (err, user)=>{
-            if(!err){
-                const fr = user.friends;
+        const user = users.filter((u)=>{return u.name==name;})[0];
+        io.to(user.socket.id).emit('local post', name, msg);
+        this.to.push(user.socket.id);
+        const friends = user.friends;
 
-                const friendObjects = users.filter((f)=>{
-                    return fr.findIndex(f.name) != -1;
-                });
-                
-                friendObjects.forEach((user)=>{
-                    io.to(user.socket.id).emit('local post', name, msg);
-                });
+        friends.forEach((fr)=>{
+            const ff = users.filter((f)=>{return fr==f.name;})[0];
+            if(ff){
+                const fs = ff.socket.id;
+                this.to.push(fs);
+                io.to(fs).emit('local post', name, msg);
             }
         });
-       
+
     }
 
     selfDestruct(name, msg){
-        io.emit("destroy local post", msg);
+        this.to.forEach((user)=>{
+            io.to(user).emit("destroy local post", msg);
+        });
     }
 }
 
@@ -218,6 +228,7 @@ class User{
         this.name = username;
         this.socket = socket;
         this.code = -1;
+        this.friends = [];
     }
 }
 

@@ -21,12 +21,12 @@
 	var socket = io();
 	
 	
-	socket.on('global post', function(name, msg){
+	socket.on('local post', function(name, msg){
 		createPost(name, msg);
 	});
 	
 	
-	socket.on('destroy global post', function(msg){
+	socket.on('destroy local post', function(msg){
 		$('#feed-area').children().last().remove();
 	});
 	
