@@ -10,7 +10,7 @@
 
     const columnLimit = 8;
     const socket = io();
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = JSON.parse(sessionStorage.getItem("user"))[0];
     console.log(user);
     function createChatBox(name) {
         /* Check to see if a window already exists with that person*/
@@ -66,8 +66,8 @@
     }
     $(document).ready(function () {
         //create chat links
-        const friendlist = $('friends-list-content');
-        user.friends.array.forEach(function(name) {
+        const friendlist = $('.friends-list-content');
+        user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
         //assign chat-links
