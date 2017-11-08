@@ -9,7 +9,7 @@
     const columnOffset = 1;
 
     const columnLimit = 8;
-    
+    const socket = io();
     const user = JSON.parse(sessionStorage.getItem("user"));
     console.log(user);
     function createChatBox(name) {
