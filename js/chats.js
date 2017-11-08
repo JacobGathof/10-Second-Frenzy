@@ -48,7 +48,6 @@
             socket.emit('chat message', $(".chat-message-entry").val());
             addOutgoingMessage(`#${name}`, $(textarea).val());
             //set text value to blank
-            console.log($(textarea));
             $(textarea).val("");
             return false;
         });
@@ -66,7 +65,7 @@
     }
     $(document).ready(function () {
         //create chat links
-        const friendlist = $('friends-list-content');
+        const friendlist = $('.friends-list-content');
         user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
