@@ -48,7 +48,6 @@
             socket.emit('chat message', $(".chat-message-entry").val());
             addOutgoingMessage(`#${name}`, $(textarea).val());
             //set text value to blank
-            console.log($(textarea));
             $(textarea).val("");
             return false;
         });
