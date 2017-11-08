@@ -8,7 +8,7 @@ const io = require('socket.io')(http);
 require('./models/user');
 const USER = mongoose.model('User');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const users = [];
 let globalId = 0;
 
@@ -37,7 +37,7 @@ io.on('connection', function(socket){
         addUser(name, socket);
     });
 
-    socket.on('disconnect', function(){
+    socket.on('sayonara', function(){
         removeUser(socket);
     });
 
@@ -69,6 +69,34 @@ io.on('connection', function(socket){
     socket.on('login', function(username, password){
         USER.find({username: username, password: password}, loginCallback);
     });
+
+    socket.on('add friend', function(name, code){
+        const potentialFriend = users.filter((user) =>{
+            return user.code ==code;
+        });
+        if (!potentialFriend||code=="-1"){
+            return;
+        }
+        const realPotentialFriend = potentialFriend[0];
+        USER.findOne({name: name}, function(err, user){
+            if (!err){
+                user.friends.push(realPotentialFriend.name);
+                user.save();
+            }
+        });
+        USER.findOne({name: realPotentialFriend.name}, function(err, user){
+            if (!err){
+                user.friends.push(name);
+                user.save();
+            }
+        });
+
+        
+    });
+
+    socket.on('set my friend code', function(name, code){
+        new FriendCode(name, code);
+    });
 });
 
 
@@ -88,15 +116,19 @@ http.listen(port, function(){
 function addUser(name, socket){
     users.push(new User(name, socket));
     console.log("A user connected");
-    console.log(users);
+    users.forEach((user)=>{
+        console.log(user.name);
+    });
 }
 
 function removeUser(socket){
     users.splice(users.indexOf(users.filter((u)=>{
-        u.socket.id = socket.id;
+        return u.socket.id == socket.id;
     })[0]), 1);
     console.log('user disconnected');
-    console.log(users);
+    users.forEach((user)=>{
+        console.log(user.name);
+    });
 }
 
 class ChatMessage{
@@ -126,27 +158,36 @@ class ChatMessage{
 
 
 class LocalPost{
-    constructor(socket, to, msg){
-        this.id = globalId++;
-        this.origin = socket;
-        this.to = to;
+    
+    constructor(name, msg){
+        this.name = name;
         this.msg = msg;
-        this.sendMessage(msg, to);
+        
+        this.sendMessage(name, msg);
         setTimeout(()=>{
-            this.selfDestruct(this.msg, to);
+            this.selfDestruct(this.name, this.msg);
         }, 5000);
     }
 
-    sendMessage(msg, to){
-        $.each(to, (f)=>{
-            io.to(f).emit('local post', msg);
+    sendMessage(name, msg){
+        USER.findOne({name:name}, (err, user)=>{
+            if(!err){
+                const fr = user.friends;
+
+                const friendObjects = users.filter((f)=>{
+                    return fr.findIndex(f.name) != -1;
+                });
+                
+                friendObjects.forEach((user)=>{
+                    io.to(user.socket.id).emit('local post', name, msg);
+                });
+            }
         });
+       
     }
 
-    selfDestruct(msg, to){
-        $.each(to, (f)=>{
-            io.to(f).emit('destroy local post');
-        });
+    selfDestruct(name, msg){
+        io.emit("destroy local post", msg);
     }
 }
 
@@ -156,33 +197,28 @@ class ChatConnection{
         this.users = u;
     }
 }
+class FriendCode{
+    constructor(name, code){
+        this.user = users.filter((user)=>{
+            return name==user.name;
+        })[0];
+        this.user.code = code;
+        setTimeout(()=>{
+            this.selfDestruct();
+        }, 10000);
+    }
 
+    selfDestruct(){
+        this.user.friendCode = -1;
+    }
+}
 
 class User{
     constructor(username, socket){
         this.name = username;
         this.socket = socket;
-        this.friends = [];
+        this.code = -1;
     }
-
-    // post(msg){
-    //     $.each(this.friends, (f)=>{
-    //         new LocalPost(this.socket, this.friends);
-    //     });
-    // }
-
-}
-
-
-function updateUser(name, socketid){
-    USER.findOne({name: name}, (err, usr)=>{
-        if(err){
-            //do nothing
-        }else{
-            usr.socketId = socketid;
-            usr.save();
-        }
-    });
 }
 
 class GlobalPost{
