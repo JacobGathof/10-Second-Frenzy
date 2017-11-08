@@ -42,7 +42,7 @@ io.on('connection', function(socket){
     });
 
     socket.on("post to global feed", function(name, msg){
-        new GlobalPost(name, msg);
+        new LocalPost(name, msg);
     });
 
     socket.on('register', function(name, username, password){
@@ -162,6 +162,7 @@ class LocalPost{
     constructor(name, msg){
         this.name = name;
         this.msg = msg;
+        this.to = [];
         
         this.sendMessage(name, msg);
         setTimeout(()=>{
@@ -173,21 +174,26 @@ class LocalPost{
         USER.findOne({name:name}, (err, user)=>{
             if(!err){
                 const fr = user.friends;
-
                 const friendObjects = users.filter((f)=>{
-                    return fr.findIndex(f.name) != -1;
+                    return fr.indexOf(f.name) != -1;
                 });
-                
+
+                io.to(users.filter((u)=>{return u.name==name;})[0].socket.id).emit('local post', name, msg);
+                this.to.push(users.filter((u)=>{return u.name==name;})[0].socket.id);
                 friendObjects.forEach((user)=>{
+                    this.to.push(user.socket.id);
                     io.to(user.socket.id).emit('local post', name, msg);
                 });
+                
             }
         });
-       
+        
     }
 
     selfDestruct(name, msg){
-        io.emit("destroy local post", msg);
+        this.to.forEach((user)=>{
+            io.to(user).emit("destroy local post", msg);
+        });
     }
 }
 
