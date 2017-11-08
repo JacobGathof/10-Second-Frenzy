@@ -111,8 +111,15 @@ io.on('connection', function(socket){
         socket.emit("sending friends list", users.filter((u)=>{return u.name==name;})[0].friends);
     });
 
-    socket.on("like", function(id){
-        getPostByID(id).like();
+    socket.on("like post", function(id){
+        if (!id){
+            return;
+        }
+        const post = getPostByID(id);
+        if(!post){
+            return;
+        }
+        post.like();
     });
 });
 
@@ -284,7 +291,7 @@ class GlobalPost{
 
     like(){
         this.likes++;
-        io.emit('like post', this.id, this.likes);
+        io.emit('like post return', this.id, this.likes);
     }
 }
 
