@@ -10,6 +10,9 @@ const USER = mongoose.model('User');
 
 const port = process.env.PORT || 3000;
 const users = [];
+const posts = [];
+let currentId = 0;
+
 let globalId = 0;
 
 const timer = 10000;
@@ -44,7 +47,7 @@ io.on('connection', function(socket){
     });
 
     socket.on("post to global feed", function(name, msg){
-        new GlobalPost(name, msg);
+        posts.push(new GlobalPost(name, msg));
     });
 
     socket.on("post to local feed", function(name, msg){
@@ -107,6 +110,10 @@ io.on('connection', function(socket){
     socket.on("display friends", function(name){
         socket.emit("sending friends list", users.filter((u)=>{return u.name==name;})[0].friends);
     });
+
+    socket.on("like", function(id){
+        getPostByID(id).like();
+    });
 });
 
 
@@ -144,6 +151,11 @@ function removeUser(socket){
     });
 }
 
+function removePost(id){
+    posts.splice(getPostByID(id), 1);
+}
+
+
 class ChatMessage{
 
     constructor(socket, msg){
@@ -173,9 +185,11 @@ class ChatMessage{
 class LocalPost{
     
     constructor(name, msg){
+        this.id = currentId++;
         this.name = name;
         this.msg = msg;
         this.to = [];
+        this.likes = 0;
         
         this.sendMessage(name, msg);
         setTimeout(()=>{
@@ -204,7 +218,14 @@ class LocalPost{
         this.to.forEach((user)=>{
             io.to(user).emit("destroy local post", msg);
         });
+        removePost(this.id);
     }
+
+    like(){
+        this.likes++;
+        io.emit('like post', this.id, this.likes);
+    }
+
 }
 
 
@@ -241,8 +262,10 @@ class User{
 class GlobalPost{
 
     constructor(name, msg){
+        this.id = currentId++;
         this.name = name;
         this.msg = msg;
+        this.likes = 0;
         
         this.sendMessage(name, msg);
         setTimeout(()=>{
@@ -251,10 +274,24 @@ class GlobalPost{
     }
 
     sendMessage(name, msg){
-        io.emit('global post', name, msg);
+        io.emit('global post', name, msg, this.id);
     }
 
     selfDestruct(name, msg){
-        io.emit("destroy global post", msg);
+        io.emit("destroy global post", msg, this.id);
+        removePost(this.id);
     }
+
+    like(){
+        this.likes++;
+        io.emit('like post', this.id, this.likes);
+    }
+}
+
+function getPostByID(id){
+    return posts.filter((p)=>{return p.id==id;})[0];
+}
+
+function getUserByName(name){
+    return users.filter((u)=>{return u.name==name;})[0];
 }

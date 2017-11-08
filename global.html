@@ -44,17 +44,18 @@
     </div>
 
     <div id="feed-area">
-      <div id="post-container-template">
+      <div id="post-container-template" data-post-id="-1">
         <div id="post-content">
           <img id="post-content-image" src="icons/like.png" />
           <p id="post-content-name">Chris Nurble </p>
+		  <p id="post-content-likes">0</p>
           <hr id="post-content-name-divider">
           <p id="post-content-source">Confucious say: Woman with soap on top shelf jump for joy</p>
         </div>
 
         <div id="post-action-bar">
           <div id="post-buttons">
-            <button><img src="icons/like.png"><div class="tool">Like</div></button>
+            <button id="blike"><img src="icons/like.png"><div class="tool">Like</div></button>
             <button><img src="icons/dislike.png"><div class="tool">Dislike</div></button>
             <button><img src="icons/share.png"><div class="tool">Share</div></button>
             <button><img src="icons/flag.png"><div class="tool">Flag</div></button>
@@ -75,14 +76,11 @@
 	  
 	  
 	  
-		<ul id="create-post"></ul>
-		<input id="m" autocomplete="off" />
-		<button id="b">Send</button>
-	  
-	  
-	  
     </div>
 	
+	<ul id="create-post"></ul>
+	<input id="m" autocomplete="off" />
+	<button id="b">Send</button>
 
 </body>
 </html>
