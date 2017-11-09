@@ -6,12 +6,20 @@
     $("#ten-hours").on("click", tenHoursButtonClicked);
     $("#ten-days").on("click", tenDaysButtonClicked);
 
+    var socket = io();
+    const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
+    socket.emit("booyakasha", name);
+
     function mostLikesButtonClicked(){
         $("#most-likes").css("background-color", "lightgreen");
         $("#most-dislikes").css("background-color", "#D3DFD3");
         $("#most-shares").css("background-color", "#D3DFD3");
-        // $("#posts tr td:first-child").
+        socket.emit("get most liked posts");
     }
+    
+    socket.on("most liked posts", function(posts){
+        //display the posts in the html
+    });
     
     function mostDislikesButtonClicked(){
         $("#most-likes").css("background-color", "#D3DFD3");

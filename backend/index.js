@@ -99,7 +99,7 @@ io.on('connection', function(socket){
             }
             const foundUser = user;
             console.log(foundUser);
-            socket.emit('register message', "Welcome to 10 Second Frenzy!")
+            socket.emit('register message', "Welcome to 10 Second Frenzy!");
             socket.emit('sendUserBack', foundUser);
         }
     }
@@ -153,6 +153,14 @@ io.on('connection', function(socket){
     //chat functionality
     socket.on('chat message out', function(to, from, msg){
         new ChatMessage(to, from, msg);
+    });
+
+    socket.on('get most liked posts', function(){
+        //Get the 10 most liked posts and put them in this array
+        const posts = [];
+
+
+        socket.emit("most liked posts", posts);
     });
 });
 
