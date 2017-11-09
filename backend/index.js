@@ -15,7 +15,7 @@ let currentId = 0;
 
 let globalId = 0;
 
-const timer = 10000;
+const timer = 2000;
 
 const dbURI = 'mongodb://user:user@ds243085.mlab.com:43085/ten-second-frenzy';
 mongoose.connect(dbURI, {
@@ -30,7 +30,6 @@ mongoose.connect(dbURI, {
 
 
 app.get("/", (req, res)=>{
-    console.log("Here");
     res.sendFile("login.html", { root: __dirname + "/../"});
 });
 
@@ -121,7 +120,44 @@ io.on('connection', function(socket){
         }
         post.like();
     });
+    //chat functionality
+    socket.on('chat message out', function(to, from, msg){
+        new ChatMessage(to, from, msg);
+    });
 });
+
+class ChatMessage {
+    constructor(to, from, msg) {
+        this.toUser = getUserByName(to);
+        this.fromUser = getUserByName(from);
+        this.msg = msg;
+
+        console.log(to + " " + from  + " " + msg);
+        console.log(this.toUser.socket.id + " " + this.fromUser.socket.id);
+        this.sendMessage();
+        setTimeout(()=>{
+            this.updateUsers();
+            this.destroyChatMessages(this.toUser.socket.id, this.fromUser.socket.id);
+        },timer);
+    }
+
+    sendMessage(){
+        this.updateUsers();
+        io.to(this.toUser.socket.id).emit('chat message in', this.fromUser.name, this.msg);
+    }
+
+    destroyChatMessages(to, from){
+        io.to(to).emit('destroy', this.fromUser.name);
+        io.to(from).emit('destroy', this.toUser.name);
+
+    }
+    updateUsers(){
+        this.toUser = getUserByName(this.toUser.name);
+        this.fromUser = getUserByName(this.fromUser.name);
+    }
+
+
+}
 
 
 io.on('connection', function(socket){
@@ -161,33 +197,6 @@ function removeUser(socket){
 function removePost(id){
     posts.splice(getPostByID(id), 1);
 }
-
-
-class ChatMessage{
-
-    constructor(socket, msg){
-        this.id = globalId++;
-        this.to = to;
-        this.from = from;
-        this.msg = msg;
-        this.id = 
-        this.sendMessage(msg, to, from);
-        setTimeout(()=>{
-            this.selfDestruct(this.msg, to, from);
-        }, timer);
-    }
-
-    sendMessage(msg, to, from){
-        io.to(to).emit('chat message', msg);
-        io.to(from).emit('chat message', msg);
-    }
-
-    selfDestruct(msg, to, from){
-        io.to(to).emit('destroy', msg);
-        io.to(from).emit('destroy', msg);
-    }
-}
-
 
 class LocalPost{
     
@@ -236,11 +245,6 @@ class LocalPost{
 }
 
 
-class ChatConnection{
-    constructor(u){
-        this.users = u;
-    }
-}
 class FriendCode{
     constructor(name, code){
         this.user = users.filter((user)=>{

@@ -18,7 +18,6 @@
             return;
         }
         
-        const socket = io();
         /* Create the actual chat window */
         const chatWindow = $("<div>").addClass("chat-window");
         const header = $("<div>").addClass("chat-window-header").text(name);
@@ -45,30 +44,34 @@
             if ($(textarea).val()==""){
                 return false;
             }
-            socket.emit('chat message', $(".chat-message-entry").val());
+            socket.emit('chat message out', name, user.name, $(".chat-message-entry").val());
             addOutgoingMessage(`#${name}`, $(textarea).val());
             //set text value to blank
             $(textarea).val("");
-            return false;
         });
 
-        socket.on('chat message', function(msg){
-            addIncomingMessage(`#${name}`, msg);
-        });
-
-        socket.on('destroy', function(){
-            $(messageWindow).children().first().remove();
-        });
+        
 
         /* Append the window to the clobal content container. */
         $(".content-container").append(chatWindow);
     }
+    //defining socket functionality for chats page
+    socket.on('chat message in', function(newName, msg){
+        console.log("received incoming message from " + newName);
+        addIncomingMessage(newName, msg);
+    });
+
+    socket.on('destroy', function(name){
+        $(`#${name}`).children().first().remove();
+    });
+
     $(document).ready(function () {
         //create chat links
         const friendlist = $('.friends-list-content');
         user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
+        socket.emit('booyakasha', user.name);
         //assign chat-links
         $.each($(".chat-link"), (index, value) => {
             $(value).on('click', () => {
@@ -78,8 +81,14 @@
     });
 
     function addIncomingMessage(id, msg){
+        let chatWindow = $(id);
+        if (chatWindow.length==0){
+            createChatBox(id);
+
+        }
         chatWindow = $(id);
-        chatWindow.append($("<div>").addClass("incoming-chat-message").text(msg));
+        const $message = $("<div>").addClass("incoming-chat-message").text(msg);
+        chatWindow.append($message);
     }
 
     function addOutgoingMessage(id, msg){
