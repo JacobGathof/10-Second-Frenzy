@@ -61,6 +61,10 @@
         addIncomingMessage(newName, msg);
     });
 
+    socket.on('chat message out', function (newName, msg){
+        addOutgoingMessage(newName, msg);
+    });
+
     socket.on('destroy', function(name){
 		console.log("Destroy");
         $(`#${name}`).children().first().remove();
@@ -85,17 +89,15 @@
         let chatWindow = $(id);
         if (chatWindow.length==0){
             createChatBox(id);
-
         }
 		console.log(msg);
         chatWindow = $("#"+id);
         const $message = $("<div>").addClass("incoming-chat-message").text(msg);
         chatWindow.append($message);
     }
-/*
     function addOutgoingMessage(id, msg){
-        chatWindow = $(id);
+        chatWindow = $("#"+id);
         chatWindow.append($("<div>").addClass("outgoing-chat-message").text(msg));
     }
-	*/
+	
 })();
