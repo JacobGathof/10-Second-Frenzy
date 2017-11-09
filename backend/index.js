@@ -13,9 +13,7 @@ const users = [];
 const posts = [];
 let currentId = 0;
 
-let globalId = 0;
-
-const timer = 2000;
+const timer = 10000;
 
 const dbURI = 'mongodb://user:user@ds243085.mlab.com:43085/ten-second-frenzy';
 mongoose.connect(dbURI, {
@@ -131,31 +129,31 @@ class ChatMessage {
         this.toUser = getUserByName(to);
         this.fromUser = getUserByName(from);
         this.msg = msg;
+        this.toName = to;
+        this.fromName = from;
 
         console.log(to + " " + from  + " " + msg);
-        console.log(this.toUser.socket.id + " " + this.fromUser.socket.id);
+
         this.sendMessage();
         setTimeout(()=>{
-            this.updateUsers();
-            this.destroyChatMessages(this.toUser.socket.id, this.fromUser.socket.id);
+            this.destroyChatMessages();
         },timer);
     }
 
     sendMessage(){
-        this.updateUsers();
-        io.to(this.toUser.socket.id).emit('chat message in', this.fromUser.name, this.msg);
+
+        if(this.toUser)
+            io.to(this.toUser.socket.id).emit('chat message in', this.fromName, this.msg);
+        if(this.fromUser)
+            io.to(this.fromUser.socket.id).emit('chat message in', this.toName, this.msg);
     }
 
-    destroyChatMessages(to, from){
-        io.to(to).emit('destroy', this.fromUser.name);
-        io.to(from).emit('destroy', this.toUser.name);
-
+    destroyChatMessages(){
+        if(this.toUser)
+            io.to(this.toUser.socket.id).emit('destroy', this.fromName);
+        if(this.fromUser)
+            io.to(this.fromUser.socket.id).emit('destroy', this.toName);
     }
-    updateUsers(){
-        this.toUser = getUserByName(this.toUser.name);
-        this.fromUser = getUserByName(this.fromUser.name);
-    }
-
 
 }
 

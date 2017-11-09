@@ -44,8 +44,8 @@
             if ($(textarea).val()==""){
                 return false;
             }
-            socket.emit('chat message out', name, user.name, $(".chat-message-entry").val());
-            addOutgoingMessage(`#${name}`, $(textarea).val());
+            socket.emit('chat message out', name, user.name, textarea.val());
+            //addOutgoingMessage(`#${name}`, $(textarea).val());
             //set text value to blank
             $(textarea).val("");
         });
@@ -62,6 +62,7 @@
     });
 
     socket.on('destroy', function(name){
+		console.log("Destroy");
         $(`#${name}`).children().first().remove();
     });
 
@@ -86,13 +87,15 @@
             createChatBox(id);
 
         }
-        chatWindow = $(id);
+		console.log(msg);
+        chatWindow = $("#"+id);
         const $message = $("<div>").addClass("incoming-chat-message").text(msg);
         chatWindow.append($message);
     }
-
+/*
     function addOutgoingMessage(id, msg){
         chatWindow = $(id);
         chatWindow.append($("<div>").addClass("outgoing-chat-message").text(msg));
     }
+	*/
 })();

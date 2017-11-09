@@ -20,6 +20,7 @@
 			console.log(id);
 			socket.emit('like post', id)
 		});
+	  node1.fadeOut(10000);
       $("#feed-area").prepend(node1);
 	  
     }
