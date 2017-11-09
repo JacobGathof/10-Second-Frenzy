@@ -7,13 +7,18 @@
     function newUserSubmit(){
         const username = $("#new-username").val();
         const password = $("#new-password").val();
+        const passwordRepeat = $('#new-repeated-password').val();
+        if (password != passwordRepeat){
+            alert('Passwords do not match!');
+            return;
+        }
         const displayName = $("#new-display-name").val();
         socket.emit('register', displayName, username, password);
         $("#new-username").val("");
         $("#new-password").val("");
         $("#new-repeated-password").val("");
         $("#new-display-name").val("");
-        window.alert("You are registered!");
+        // window.alert("You are registered!");
     }
 
     function existingUserSubmit(){
@@ -30,6 +35,10 @@
         catch(e){
             console.log(e);
         }
+    });
+
+    socket.on('register message', (message)=>{
+        alert(message);
     });
 
 })();

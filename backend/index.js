@@ -52,13 +52,38 @@ io.on('connection', function(socket){
     });
 
     socket.on('register', function(name, username, password){
-        console.log("User Registered");
-        USER.create({
-            name: name,
-            username: username,
-            password : password,
-            friends: [],
+        
+        USER.findOne({name: name}, (err, obj)=>{
+            let error=false;
+            if (err){
+                console.log("some error");
+                return;
+            }
+            else{
+                if (obj){
+                    if (obj.name==name){
+                        console.log("display name");
+                        socket.emit('register message', "Display name unavailable.");
+                    }
+                    else if (obj.username==username){
+                        console.log("username");
+                        socket.emit('register message', "Username unavailable");
+                    }
+                    error = true;
+                }
+            }
+            if (!error){
+                USER.create({
+                    name: name,
+                    username: username,
+                    password : password,
+                    friends: [],
+                });
+                socket.emit('register message', "Successful registration!");
+            }
         });
+        
+        
     }); 
 
     function loginCallback(err, user){
@@ -66,8 +91,13 @@ io.on('connection', function(socket){
             console.log(err);
         }
         else{
+            if (user.length==0){
+                socket.emit('register message', "Invalid Login Credentials");
+                return;
+            }
             const foundUser = user;
             console.log(foundUser);
+            socket.emit('register message', "Welcome to 10 Second Frenzy!")
             socket.emit('sendUserBack', foundUser);
         }
     }
@@ -141,11 +171,10 @@ class ChatMessage {
     }
 
     sendMessage(){
-
         if(this.toUser)
             io.to(this.toUser.socket.id).emit('chat message in', this.fromName, this.msg);
         if(this.fromUser)
-            io.to(this.fromUser.socket.id).emit('chat message in', this.toName, this.msg);
+            io.to(this.fromUser.socket.id).emit('chat message out', this.toName, this.msg);
     }
 
     destroyChatMessages(){
