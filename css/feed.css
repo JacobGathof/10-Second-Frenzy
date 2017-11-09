@@ -1,9 +1,8 @@
-
 .post-container{
   display:inline-block;
   border:2px solid lightgreen;
   margin: 10px;
-  width: 50%;
+  width: 40%;
 }
 
 #post-container-template{
@@ -86,7 +85,7 @@
 
 #post-comment textarea{
   width:95%;
-  height: 100px;
+  height: 20px;
   padding:1%;
   margin:1%;
   border:1%;
@@ -110,4 +109,8 @@ button img{
   margin: 0%;
   padding:0%;
   font-size:28pt;
+}
+
+#post-content-likes{
+	float:right;
 }

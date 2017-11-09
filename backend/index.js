@@ -6,12 +6,14 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 require('./models/user');
+require('./models/post');
 const USER = mongoose.model('User');
+const POST = mongoose.model('Post');
 
 const port = process.env.PORT || 3000;
 const users = [];
 const posts = [];
-let currentId = 0;
+let currentId = 6453;
 
 const timer = 10000;
 
@@ -48,7 +50,7 @@ io.on('connection', function(socket){
     });
 
     socket.on("post to local feed", function(name, msg){
-        new LocalPost(name, msg);
+        posts.push(new LocalPost(name, msg));
     });
 
     socket.on('register', function(name, username, password){
@@ -213,7 +215,7 @@ class LocalPost{
 
     sendMessage(name, msg){
         const user = users.filter((u)=>{return u.name==name;})[0];
-        io.to(user.socket.id).emit('local post', name, msg);
+        io.to(user.socket.id).emit('local post', name, msg, this.id);
         this.to.push(user.socket.id);
         const friends = user.friends;
 
@@ -222,7 +224,7 @@ class LocalPost{
             if(ff){
                 const fs = ff.socket.id;
                 this.to.push(fs);
-                io.to(fs).emit('local post', name, msg);
+                io.to(fs).emit('local post', name, msg, this.id);
             }
         });
 
@@ -230,14 +232,14 @@ class LocalPost{
 
     selfDestruct(name, msg){
         this.to.forEach((user)=>{
-            io.to(user).emit("destroy local post", msg);
+            io.to(user).emit("destroy local post", msg, this.id);
         });
         removePost(this.id);
     }
 
     like(){
         this.likes++;
-        io.emit('like post', this.id, this.likes);
+        io.emit('like post return', this.id, this.likes);
     }
 
 }
@@ -289,6 +291,19 @@ class GlobalPost{
     selfDestruct(name, msg){
         io.emit("destroy global post", msg, this.id);
         removePost(this.id);
+
+        POST.create({
+            timestamp: null,
+            content: this.msg,
+            link: null,
+            author: this.name,
+            likes: this.likes,
+            dislikes: null,
+            shares: null,
+            reports: null,
+            comments: [null]
+        });
+
     }
 
     like(){

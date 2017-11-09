@@ -10,14 +10,12 @@
       let node = $("#post-container-template");
       let node1 = node.clone();
       node1.addClass("post-container").removeAttr("id");
-	  node1.attr("data-post-id", id);
+	  node1.data("post-id", id);
 	  node1.find("#post-content-name").html(name);
 	  node1.find("#post-content-source").html(message);
 	  node1.find("#post-content-id").html(id);
 	  node1.find('.blike').on("click", function(){
-			console.log(node1.find(".post-container"));
-			const id = node1.find(".post-container").attr("data-post-id");
-			console.log(id);
+			const id = node1.data().postId;
 			socket.emit('like post', id)
 		});
 	  node1.fadeOut(10000);
@@ -41,29 +39,35 @@
 	
 	socket.on('destroy global post', function(msg, id){
 		
-		let feed = document.getElementById("feed-area");
-		let children = feed.children;
-		
-		for(let i = 0; i < children.length; i++){
-			let child = children[i];
-			if(child.getAttribute("data-post-id") == id){
-				child.parentNode.removeChild(child);
+		let currP = null;
+		$.each($(".post-container"), function(i, p){
+			if($(p).data().postId == ""+id){
+				currP = $(p);
 				return;
 			}
+		});
+		
+		if(!currP){
+			return;
 		}
+		currP.remove();
+		
 	});
 	
 	socket.on("like post return", function(id, likes){
-		let feed = document.getElementById("feed-area");
-		let children = feed.children;
 		
-		for(let i = 0; i < children.length; i++){
-			let child = children[i];
-			if(child.getAttribute("data-post-id") == id){
-				child.children[0].children[2].innerHTML = ""+likes;
+		let currP = null;
+		$.each($(".post-container"), function(i, p){
+			if($(p).data().postId == ""+id){
+				currP = $(p);
 				return;
 			}
+		});
+		
+		if(!currP){
+			return;
 		}
+		currP.find("#post-content-likes").text(""+likes);
 		
 	});
 	
