@@ -72,7 +72,7 @@
     socket.emit('booyakasha', user.name);
 	socket.emit('display friends', user.name);
 	
-	socket.on("sending friends list", function(friends)){
+	socket.on("sending friends list", function(friends){
 		user.friends = friends;
 		
 		const friendlist = $('.friends-list-content');
@@ -87,7 +87,7 @@
             });
         });
 		
-	}
+	});
 	
     $(document).ready(function () {
         
