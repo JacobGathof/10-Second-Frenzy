@@ -180,16 +180,19 @@ io.on('connection', function(socket){
 
     socket.on('get most liked posts', function(){
         //Get the 10 most liked posts and put them in this array
-        POST.find({$limit : 10, $orderby: {likes: -1}}, (err, posts)=>{
+        POST.find({}).sort({'likes':-1}).limit(10).exec((err, posts)=>{
             if(!err){
                 socket.emit("most liked posts", posts);
+            }
+            else{
+                console.log("No posts");
             }
         });
     });
 
     socket.on('get least liked posts', function(){
         //Get the 10 most liked posts and put them in this array
-        POST.find({$limit : 10, $orderby: {likes: 1}}, (err, posts)=>{
+        POST.find({}).sort({'likes':1}).limit(10).exec((err, posts)=>{
             if(!err){
                 socket.emit("least liked posts", posts);
             }
