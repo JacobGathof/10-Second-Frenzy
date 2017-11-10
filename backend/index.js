@@ -161,6 +161,18 @@ io.on('connection', function(socket){
         }
         post.like();
     });
+
+    socket.on("dislike post", function(id){
+        if (!id){
+            return;
+        }
+        const post = getPostByID(id);
+        if(!post){
+            return;
+        }
+        post.dislike();
+    });
+
     //chat functionality
     socket.on('chat message out', function(to, from, msg){
         new ChatMessage(to, from, msg);
@@ -168,11 +180,23 @@ io.on('connection', function(socket){
 
     socket.on('get most liked posts', function(){
         //Get the 10 most liked posts and put them in this array
-        const posts = [];
-
-
-        socket.emit("most liked posts", posts);
+        POST.find({$limit : 10, $orderby: {likes: -1}}, (err, posts)=>{
+            if(!err){
+                socket.emit("most liked posts", posts);
+            }
+        });
     });
+
+    socket.on('get least liked posts', function(){
+        //Get the 10 most liked posts and put them in this array
+        POST.find({$limit : 10, $orderby: {likes: 1}}, (err, posts)=>{
+            if(!err){
+                socket.emit("least liked posts", posts);
+            }
+        });
+    });
+
+
     //settings functionality
     socket.on('update user url', (name, url)=>{
         USER.findOne({name:name}, (err, user)=>{
@@ -299,6 +323,10 @@ class LocalPost{
         io.emit('like post return', this.id, this.likes);
     }
 
+    dislike(){
+        this.likes--;
+        io.emit('like post return', this.id, this.likes);
+    }
 }
 
 
@@ -368,6 +396,11 @@ class GlobalPost{
 
     like(){
         this.likes++;
+        io.emit('like post return', this.id, this.likes);
+    }
+
+    dislike(){
+        this.likes--;
         io.emit('like post return', this.id, this.likes);
     }
 }
