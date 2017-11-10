@@ -36,8 +36,8 @@
     function populateTable(posts){
         const table = $('#posts');
         table.empty();
-        const head = $('<tr>').append($('<th>').text('No.')).append($('<th>').text('Author')).append($('<th>').text('Content')).append($('<th>').text('Likes')
-        table.append());
+        const head = $('<tr>').append($('<th>').text('No.')).append($('<th>').text('Author')).append($('<th>').text('Content')).append($('<th>').text('Likes'));
+        table.append();
         for (let i = 0; i < 10; i++){
             const row = $('<tr></tr>');
             row.append($('<td>').text(i+1));
