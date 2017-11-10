@@ -186,6 +186,17 @@ io.on('connection', function(socket){
             }
         });
     });
+
+    socket.on('get least liked posts', function(){
+        //Get the 10 most liked posts and put them in this array
+        POST.find({$limit : 10, $orderby: {likes: 1}}, (err, posts)=>{
+            if(!err){
+                socket.emit("least liked posts", posts);
+            }
+        });
+    });
+
+
     //settings functionality
     socket.on('update user url', (name, url)=>{
         USER.findOne({name:name}, (err, user)=>{
