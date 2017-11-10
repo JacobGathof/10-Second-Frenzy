@@ -15,6 +15,7 @@ const users = [];
 const posts = [];
 let currentId = 6453;
 
+
 const timer = 10000;
 
 const dbURI = 'mongodb://user:user@ds243085.mlab.com:43085/ten-second-frenzy';
@@ -30,7 +31,7 @@ mongoose.connect(dbURI, {
 
 
 app.get("/", (req, res)=>{
-    res.sendFile("login.html", { root: __dirname + "/../"});
+    res.sendFile("frontend/login.html", { root: __dirname + "/../"});
 });
 
 app.use('/', express.static(path.join(__dirname, "/../")));
@@ -184,7 +185,8 @@ io.on('connection', function(socket){
                 user.save();
             }
         });
-    })
+    });
+
 });
 
 class ChatMessage {
@@ -219,15 +221,6 @@ class ChatMessage {
 
 }
 
-
-io.on('connection', function(socket){
-    socket.on('chat message', function(msg){
-        new ChatMessage(socket,msg);
-    });
-
-});
-
-
 http.listen(port, function(){
     console.log('listening on *:3000');
 });
@@ -238,18 +231,21 @@ function addUser(name, socket){
     USER.findOne({name:name}, function(err, user){
         if(!err&&user){
             u.friends = user.friends;
-            console.log(u.friends);
         }
     });
     users.push(u);
-    console.log("A user connected");
+    console.log(u.name + " connected");
 }
 
 function removeUser(socket){
-    users.splice(users.indexOf(users.filter((u)=>{
+    const index = users.indexOf(users.filter((u)=>{
         return u.socket.id == socket.id;
-    })[0]), 1);
-    console.log('user disconnected');
+    })[0]);
+    console.log(index);
+    if(index==-1)
+        return;
+    const rem = users.splice(index, 1);
+    console.log(rem[0].name + ' disconnected');
     users.forEach((user)=>{
         console.log(user.name);
     });
@@ -332,6 +328,11 @@ class User{
 class GlobalPost{
 
     constructor(name, msg){
+
+        users.forEach((uu)=>{
+            console.log("~"+uu.name);
+        });
+
         this.id = currentId++;
         this.name = name;
         this.msg = msg;

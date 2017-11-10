@@ -31,6 +31,7 @@
 	}
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
 	
+
 	const socket = io("https://ten-second-frenzy-api.herokuapp.com");
 	
 	
