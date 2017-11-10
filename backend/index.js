@@ -184,7 +184,7 @@ io.on('connection', function(socket){
                 user.save();
             }
         });
-    });
+    })
 });
 
 class ChatMessage {
@@ -195,7 +195,7 @@ class ChatMessage {
         this.toName = to;
         this.fromName = from;
 
-        console.log(to + " " + from  + " " + msg);
+        console.log(this.toUser.name + " " + this.fromUser.name  + " " + msg);
 
         this.sendMessage();
         setTimeout(()=>{
@@ -207,7 +207,7 @@ class ChatMessage {
         if(this.toUser)
             io.to(this.toUser.socket.id).emit('chat message in', this.fromName, this.msg);
         if(this.fromUser)
-            io.to(this.fromUser.socket.id).emit('chat message out', this.toName, this.msg);
+            io.to(this.fromUser.socket.id).emit('chat message sent', this.toName, this.msg);
     }
 
     destroyChatMessages(){
@@ -218,6 +218,14 @@ class ChatMessage {
     }
 
 }
+
+
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+        new ChatMessage(socket,msg);
+    });
+
+});
 
 
 http.listen(port, function(){

@@ -10,7 +10,8 @@
             friendCode += Math.floor(Math.random() * 9) + 1;
         }
         console.log(friendCode);
-        $("#generate-friend-code").text(friendCode);
+		const v = $("<p>"+friendCode+"</p>").fadeOut(10000);
+        $("#generate-friend-code").empty().append(v);
 		
 		socket.emit('set my friend code', name, friendCode);
     }

@@ -61,7 +61,7 @@
         addIncomingMessage(newName, msg);
     });
 
-    socket.on('chat message out', function (newName, msg){
+    socket.on('chat message sent', function (newName, msg){
         console.log("received incoming message from " + newName);
         addOutgoingMessage(newName, msg);
     });
@@ -69,14 +69,14 @@
     socket.on('destroy', function(name){
         $(`#${name}`).children().first().remove();
     });
-
+    socket.emit('booyakasha', user.name);+
     $(document).ready(function () {
         //create chat links
         const friendlist = $('.friends-list-content');
         user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
-        socket.emit('booyakasha', user.name);
+        
         //assign chat-links
         $.each($(".chat-link"), (index, value) => {
             $(value).on('click', () => {
@@ -92,12 +92,12 @@
         }
 		console.log(msg);
         chatWindow = $("#"+id);
-        const $message = $("<div>").addClass("incoming-chat-message").text(msg);
+        const $message = $("<div>").addClass("incoming-chat-message").text(msg).fadeOut(10000);
         chatWindow.append($message);
     }
     function addOutgoingMessage(id, msg){
         chatWindow = $("#"+id);
-        chatWindow.append($("<div>").addClass("outgoing-chat-message").text(msg));
+        chatWindow.append($("<div>").addClass("outgoing-chat-message").text(msg).fadeOut(10000));
     }
 	
 })();
