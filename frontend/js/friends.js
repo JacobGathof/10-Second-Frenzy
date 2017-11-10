@@ -1,5 +1,5 @@
 (function () {
-	const socket = io();
+	const socket = io("https://ten-second-frenzy-api.herokuapp.com");
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
     $("#generate-friend-code-button").on("click", generateFriendCode);
 	$('#add-friend-button').on('click', addFriend);

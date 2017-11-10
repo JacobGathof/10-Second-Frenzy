@@ -6,7 +6,7 @@
     $("#ten-hours").on("click", tenHoursButtonClicked);
     $("#ten-days").on("click", tenDaysButtonClicked);
 
-    var socket = io();
+    var socket = io("https://ten-second-frenzy-api.herokuapp.com");
     const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
     socket.emit("booyakasha", name);
 

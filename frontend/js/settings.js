@@ -1,5 +1,5 @@
 (function (){
-    const socket = io();
+    const socket = io("https://ten-second-frenzy-api.herokuapp.com");
     socket.emit('booyakasha');
     const user = sessionStorage.getItem("user")[0];
     if (!user){

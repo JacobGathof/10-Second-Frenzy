@@ -1,5 +1,5 @@
 (function () {
-    const socket = io();
+    const socket = io("https://ten-second-frenzy-api.herokuapp.com");
     $("#new-user-submit").on("click", newUserSubmit);
     $('#existing-user-submit').on("click", existingUserSubmit);
 	
