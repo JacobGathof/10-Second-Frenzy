@@ -41,7 +41,7 @@ io.on('connection', function(socket){
         addUser(name, socket);
     });
 
-    socket.on('sayonara', function(){
+    socket.on('disconnect', function(){
         removeUser(socket);
     });
 
@@ -257,13 +257,13 @@ class LocalPost{
     }
 
     sendMessage(name, msg){
-        const user = users.filter((u)=>{return u.name==name;})[0];
+        const user = getUserByName(name);
         io.to(user.socket.id).emit('local post', name, msg, this.id);
         this.to.push(user.socket.id);
         const friends = user.friends;
 
         friends.forEach((fr)=>{
-            const ff = users.filter((f)=>{return fr==f.name;})[0];
+            const ff = getUserByName(fr);
             if(ff){
                 const fs = ff.socket.id;
                 this.to.push(fs);
