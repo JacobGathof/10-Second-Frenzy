@@ -1,9 +1,6 @@
 (function () {
     $("#most-likes").on("click", mostLikesButtonClicked);
     $("#most-dislikes").on("click", mostDislikesButtonClicked);
-    $("#ten-minutes").on("click", tenMinutesButtonClicked);
-    $("#ten-hours").on("click", tenHoursButtonClicked);
-    $("#ten-days").on("click", tenDaysButtonClicked);
 
     var socket = io("https://ten-second-frenzy-api.herokuapp.com");
     const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
