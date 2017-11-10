@@ -18,6 +18,7 @@
     }
     
     socket.on("most liked posts", function(posts){
+        console.log("got posts");
         if (posts.length < 10){
             console.log("ERROR POSTs");
             return;
@@ -25,6 +26,7 @@
         populateTable(posts);
     });
     socket.on("least liked posts", function(posts){
+        console.log("got posts");
         if (posts.length < 10){
             console.log("ERROR POSTS");
             return;
@@ -41,6 +43,7 @@
             row.append($('<td>').text(posts[i].likes));
             table.append(row);
         }
+        console.log(table);
     }
     
     function mostDislikesButtonClicked(){
