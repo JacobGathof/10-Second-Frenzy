@@ -16,7 +16,7 @@
 	  node1.find("#post-content-id").html(id);
 	  node1.find('.blike').on("click", function(){
 			const id = node1.data().postId;
-			socket.emit('like post', id)
+			socket.emit('like post', id);
 		});
 	  node1.fadeOut(10000);
       $("#feed-area").prepend(node1);
