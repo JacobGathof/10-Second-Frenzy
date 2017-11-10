@@ -32,11 +32,9 @@
 	
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
 	
-<<<<<<< HEAD
+
 	const socket = io();
 	
-=======
->>>>>>> c9f5cb85dc97f1b625becd9e6263ad1117eb187d
 	
 	socket.on('local post', function(name, msg, id){
 		createPost(name, msg, id);

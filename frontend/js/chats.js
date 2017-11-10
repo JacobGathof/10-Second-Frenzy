@@ -69,10 +69,13 @@
     socket.on('destroy', function(name){
         $(`#${name}`).children().first().remove();
     });
-    socket.emit('booyakasha', user.name);+
-    $(document).ready(function () {
-        //create chat links
-        const friendlist = $('.friends-list-content');
+    socket.emit('booyakasha', user.name);
+	socket.emit('display friends', user.name);
+	
+	socket.on("sending friends list", function(friends)){
+		user.friends = friends;
+		
+		const friendlist = $('.friends-list-content');
         user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
@@ -83,6 +86,11 @@
                 createChatBox($(value).text().trim());
             });
         });
+		
+	}
+	
+    $(document).ready(function () {
+        
     });
 
     function addIncomingMessage(id, msg){
