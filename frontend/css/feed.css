@@ -1,6 +1,6 @@
 .post-container{
   display:inline-block;
-  border:2px solid lightgreen;
+  border:2px solid #3D703D;
   margin: 10px;
   width: 18%;
 }
@@ -113,4 +113,15 @@ button img{
 
 #post-content-likes{
 	float:right;
+}
+
+#b{
+  border: 2px solid #3D703D;
+  text-align: center;
+  vertical-align: center;
+  background-color: #D3DFD3;
+}
+
+#b:hover{
+  background-color: green;
 }

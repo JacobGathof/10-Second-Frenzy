@@ -5,7 +5,7 @@
 }
 
 button{
-    border: 2px solid lightgreen;
+    border: 2px solid #3D703D;
     width: 100%;
     background-color: #D3DFD3;
     padding-top: 10px;
@@ -44,10 +44,10 @@ button{
 }
 
 #posts td{
-    border: 2px solid lightgreen;
+    border: 2px solid #3D703D;
     padding: 10px;
 }
 #posts th{
-    border: 2px solid lightgreen;
+    border: 2px solid #3D703D;
     padding: 10px;
 }
