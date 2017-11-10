@@ -30,7 +30,7 @@
     socket.on('sendUserBack', function(user){
         try{
             sessionStorage.setItem("user", JSON.stringify(user));
-			window.location.href = "index.html";
+			window.location.href = "global.html";
         }
         catch(e){
             console.log(e);
