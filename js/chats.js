@@ -69,14 +69,14 @@
     socket.on('destroy', function(name){
         $(`#${name}`).children().first().remove();
     });
-
+    socket.emit('booyakasha', user.name);
     $(document).ready(function () {
         //create chat links
         const friendlist = $('.friends-list-content');
         user.friends.forEach(function(name) {
             friendlist.append($('<div>').addClass('chat-link').text(name));
         }, this);
-        socket.emit('booyakasha', user.name);
+        
         //assign chat-links
         $.each($(".chat-link"), (index, value) => {
             $(value).on('click', () => {

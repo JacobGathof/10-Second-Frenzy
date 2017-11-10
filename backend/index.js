@@ -175,7 +175,7 @@ io.on('connection', function(socket){
                 user.save();
             }
         });
-    });
+    })
 });
 
 class ChatMessage {
@@ -209,6 +209,14 @@ class ChatMessage {
     }
 
 }
+
+
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+        new ChatMessage(socket,msg);
+    });
+
+});
 
 
 http.listen(port, function(){
