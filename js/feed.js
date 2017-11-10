@@ -2,6 +2,9 @@
 
 (function () {
     "use strict";
+	
+	let socket = io();
+	
 	function createPostElement(name, message, id){
 		
 	}
@@ -28,8 +31,6 @@
 	}
 	
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
-	
-	var socket = io();
 	
 	
 	socket.on('local post', function(name, msg, id){
