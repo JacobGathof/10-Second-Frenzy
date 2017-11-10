@@ -43,4 +43,9 @@
 		});
 	});
 	
+	socket.on("added friend", function(name){
+		alert("Congrats! You are now friends with " + name);
+	});
+	
+	
 })();
