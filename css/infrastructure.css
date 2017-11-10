@@ -12,8 +12,8 @@ body{
 }
 .header{ /*  grid container for the top*/
     display: grid;
-    grid-template-rows: 3;
-    grid-template-columns: 12;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 5% 35% 5% 50% 5%;
     background-color: lightgreen;
 }
 #title{
@@ -22,13 +22,14 @@ body{
     padding: 8px;
     border-radius: 4px;
 
-    grid-row: 1 / 2;
-    grid-column: 2 / 7;
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
 }
 
 #navlist{
-    grid-row: 1 / 2;
-    grid-column: 8 / 12;
+    vertical-align: middle;
+    grid-row: 2 / 3;
+    grid-column: 4 / 5;
 }
 .nav{
     background-color: #44CC44;

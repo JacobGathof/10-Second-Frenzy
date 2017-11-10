@@ -62,11 +62,11 @@
     });
 
     socket.on('chat message out', function (newName, msg){
+        console.log("received incoming message from " + newName);
         addOutgoingMessage(newName, msg);
     });
 
     socket.on('destroy', function(name){
-		console.log("Destroy");
         $(`#${name}`).children().first().remove();
     });
 

@@ -80,6 +80,7 @@ io.on('connection', function(socket){
                     username: username,
                     password : password,
                     friends: [],
+                    image: null
                 });
                 socket.emit('register message', "Successful registration!");
             }
@@ -162,6 +163,19 @@ io.on('connection', function(socket){
 
         socket.emit("most liked posts", posts);
     });
+    //settings functionality
+    socket.on('update user url', (name, url)=>{
+        USER.findOne({name:name}, (err, user)=>{
+            if (err){
+                //send error
+            }
+            else{
+                user.image = url;
+                console.log("Image URL is now:" + url);
+                user.save();
+            }
+        });
+    });
 });
 
 class ChatMessage {
@@ -197,14 +211,6 @@ class ChatMessage {
 }
 
 
-io.on('connection', function(socket){
-    socket.on('chat message', function(msg){
-        new ChatMessage(socket,msg);
-    });
-
-});
-
-
 http.listen(port, function(){
     console.log('listening on *:3000');
 });
@@ -213,7 +219,7 @@ http.listen(port, function(){
 function addUser(name, socket){
     const u = new User(name, socket);
     USER.findOne({name:name}, (err, user)=>{
-        if(!err){
+        if(!err&&user){
             u.friends = user.friends;
         }
     });
@@ -330,7 +336,7 @@ class GlobalPost{
         removePost(this.id);
 
         POST.create({
-            timestamp: null,
+            timestamp: new Date(),
             content: this.msg,
             link: null,
             author: this.name,

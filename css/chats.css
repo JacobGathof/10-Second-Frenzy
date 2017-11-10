@@ -60,7 +60,6 @@ h1,h2,h3,h4,h5,h6{
 }
 .chat-message-container{
     padding: 2px 0px 2px 0px;
-    overflow-y: scroll;
 }
 .incoming-chat-message{
     padding: 2px;
