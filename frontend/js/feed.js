@@ -26,7 +26,9 @@
 	function createPost(name, message, id){
 		duplicateNode(name, message, id);
 	}
-	
+	if(!JSON.parse(sessionStorage.getItem("user"))){
+		window.location.href = "login.html";
+	}
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
 	
 	const socket = io("https://ten-second-frenzy-api.herokuapp.com");
