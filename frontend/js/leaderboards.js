@@ -34,7 +34,7 @@
         populateTable(posts);
     });
     function populateTable(posts){
-        const table = $('#table')
+        const table = $('#posts')
         for (let i = 0; i < 10; i++){
             const row = $('<tr></tr>');
             row.append($('<td>').text(i+1));
