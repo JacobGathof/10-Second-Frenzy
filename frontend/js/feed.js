@@ -18,6 +18,10 @@
 			const id = node1.data().postId;
 			socket.emit('like post', id);
 		});
+	  node1.find('.bdislike').on("click", function(){
+			const id = node1.data().postId;
+			socket.emit('dislike post', id);
+		});	
 	  node1.fadeOut(10000);
       $("#feed-area").prepend(node1);
 	  
@@ -77,7 +81,10 @@
 	
 	function setup(){
 		$('#b').on("click", function(){
-			socket.emit('post to local feed', name, $('#m').val());
+			if($('#m').val()){
+				socket.emit('post to local feed', name, $('#m').val());
+				$('#m').val("");
+			}
 		});
 	}
 	
