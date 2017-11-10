@@ -47,6 +47,7 @@
         $("#most-likes").css("background-color", "#D3DFD3");
         $("#most-dislikes").css("background-color", "lightgreen");
         $("#most-shares").css("background-color", "#D3DFD3");
+        socket.emit('get least liked posts');
     }
 
     function mostSharesButtonClicked(){
