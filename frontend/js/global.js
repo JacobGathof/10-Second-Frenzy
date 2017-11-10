@@ -3,7 +3,7 @@
 (function () {
     "use strict";
 	
-	let socket = io();
+	let socket = io("https://ten-second-frenzy-api.herokuapp.com");
 	
 	function createPostElement(name, message, id){
 		

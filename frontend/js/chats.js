@@ -9,7 +9,7 @@
     const columnOffset = 1;
 
     const columnLimit = 8;
-    const socket = io();
+    const socket = io("https://ten-second-frenzy-api.herokuapp.com");
     const user = JSON.parse(sessionStorage.getItem("user"))[0];
     console.log(user);
     function createChatBox(name) {

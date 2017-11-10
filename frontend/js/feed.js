@@ -1,10 +1,7 @@
 
 
 (function () {
-    "use strict";
-	
-	let socket = io();
-	
+    "use strict";	
 	function createPostElement(name, message, id){
 		
 	}
@@ -32,11 +29,8 @@
 	
 	const name = JSON.parse(sessionStorage.getItem("user"))[0].name;
 	
-<<<<<<< HEAD
-	const socket = io();
+	const socket = io("https://ten-second-frenzy-api.herokuapp.com");
 	
-=======
->>>>>>> c9f5cb85dc97f1b625becd9e6263ad1117eb187d
 	
 	socket.on('local post', function(name, msg, id){
 		createPost(name, msg, id);
